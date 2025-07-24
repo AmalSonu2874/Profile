@@ -21,6 +21,7 @@ window.onscroll = () => {
         if (top >= offset && top < offset + height) {
             navLinks.forEach(links => {
                 links.classList.remove('active');
+                // Ensure the link for the current section is highlighted
                 document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
             });
         }
@@ -31,6 +32,7 @@ window.onscroll = () => {
     header.classList.toggle('sticky', window.scrollY > 100);
 
     // Remove toggle icon and navbar when click navbar link (scroll)
+    // This ensures the mobile menu closes when a nav link is clicked
     menuIcon.classList.remove('bx-x');
     navbar.classList.remove('active');
 };
@@ -38,7 +40,8 @@ window.onscroll = () => {
 
 // Text animation for home section
 document.addEventListener("DOMContentLoaded", function() {
-    const textAnimationSpan = document.querySelector(".text-animation span");
+    // UPDATED: Target the specific span with the 'animated-text' class
+    const textAnimationSpan = document.querySelector(".text-animation .animated-text");
     const roles = ["Data Analyst", "AI Student", "Data Science Enthusiast", "Problem Solver"];
     let roleIndex = 0;
     let charIndex = 0;
