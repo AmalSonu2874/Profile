@@ -54,10 +54,10 @@ function updateTime() {
         hour12: true
     };
     const timeString = now.toLocaleString('en-IN', options);
-    document.getElementById('live-time').innerText = timeString;
+    document.getElementById('live-time').innerText = timeString + ' IST';
 
     const mobileTimeEl = document.getElementById('mobile-live-time');
-    if (mobileTimeEl) mobileTimeEl.innerText = timeString;
+    if (mobileTimeEl) mobileTimeEl.innerText = timeString + ' IST';
 }
 setInterval(updateTime, 1000);
 updateTime();
@@ -171,12 +171,6 @@ const container = document.getElementById('webgl');
 renderer.setSize(window.innerWidth, window.innerHeight);
 container.appendChild(renderer.domElement);
 
-// Updated colors to match Burgundy
-const geometry = new THREE.IcosahedronGeometry(4, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x5B0E14, wireframe: true, transparent: true, opacity: 0.15 });
-const sphere = new THREE.Mesh(geometry, material);
-scene.add(sphere);
-
 const pGeo = new THREE.BufferGeometry();
 const pCount = 600;
 const pPos = new Float32Array(pCount * 3);
@@ -196,10 +190,6 @@ document.addEventListener('mousemove', (e) => {
 
 function animate() {
     requestAnimationFrame(animate);
-    sphere.rotation.y += 0.002;
-    sphere.rotation.x += 0.001;
-    sphere.rotation.y += mouseX * 0.02;
-    sphere.rotation.x += mouseY * 0.02;
     particles.rotation.y = -Date.now() * 0.0001;
     renderer.render(scene, camera);
 }
