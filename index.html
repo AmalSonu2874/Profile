@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
+
 <body class="font-body">
 
     <!-- SCROLL PROGRESS -->
@@ -33,28 +34,30 @@
     <!-- LOADER -->
     <div id="loader">
         <div class="relative flex items-center justify-center">
-            <h1 id="loader-full"
-                class="font-display font-bold text-5xl md:text-7xl text-sage tracking-tighter absolute">AMAL SONU</h1>
+            <h1 id="loader-full" class="font-display font-bold text-5xl md:text-7xl tracking-tighter absolute">
+                <span class="text-burgundy">AMAL</span> <span class="text-charcoal">SONU</span>
+            </h1>
             <h1 id="loader-short"
-                class="font-display font-bold text-5xl md:text-7xl text-sage tracking-tighter absolute opacity-0 scale-50">
-                AS</h1>
+                class="font-display font-bold text-5xl md:text-7xl text-burgundy tracking-tighter absolute opacity-0 scale-50">
+                AMAL
+            </h1>
         </div>
     </div>
 
     <!-- BACKGROUNDS -->
     <div id="webgl"></div>
-    <div class="fixed inset-0 bg-noise opacity-20 pointer-events-none z-0"></div>
+    <div class="fixed inset-0 bg-noise opacity-40 pointer-events-none z-0"></div>
 
     <!-- NAVIGATION -->
-    <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-dark/80 backdrop-blur-md border-b border-white/5 transition-all duration-300"
+    <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-gold/80 backdrop-blur-md border-b border-burgundy/10 transition-all duration-300"
         id="navbar">
         <div class="flex items-center gap-6">
-            <a href="#home" id="nav-logo" class="font-display font-bold text-2xl text-sage opacity-0">AMAL</a>
+            <a href="#home" id="nav-logo" class="font-display font-bold text-2xl text-burgundy opacity-0">AMAL</a>
 
             <!-- Live Time Widget -->
             <div
-                class="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-zinc-300 tabular-nums">
-                <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                class="flex items-center gap-2 px-3 py-1 rounded-full border border-burgundy/20 bg-white/50 text-xs font-mono text-burgundy-muted tabular-nums shadow-sm">
+                <div class="w-2 h-2 rounded-full bg-green-600 animate-pulse"></div>
                 <span id="live-time">...</span>
             </div>
         </div>
@@ -62,50 +65,53 @@
         <div class="hidden md:flex gap-10">
             <a href="#home" class="nav-link">Home</a>
             <a href="#skills" class="nav-link">Skills</a>
+            <a href="#journey" class="nav-link">Journey</a>
             <a href="#work" class="nav-link">Work</a>
             <a href="#contact" class="nav-link">Contact</a>
         </div>
 
-        <button class="md:hidden text-white relative group" id="mobile-btn">
+        <button class="md:hidden text-burgundy relative group" id="mobile-btn">
             <span
-                class="absolute -inset-2 bg-white/10 rounded-full scale-0 group-hover:scale-100 transition-transform"></span>
-            <i data-lucide="menu" class="w-6 h-6 relative z-10"></i>
+                class="absolute -inset-2 bg-burgundy/10 rounded-full scale-0 group-hover:scale-100 transition-transform"></span>
+            <i data-lucide="menu" class="w-6 h-6 relative z-10 text-burgundy"></i>
         </button>
     </nav>
 
-    <!-- CUSTOM MOBILE MENU -->
+    <!-- MOBILE MENU -->
     <div id="mobile-menu"
-        class="fixed inset-0 z-[100] bg-dark/95 backdrop-blur-xl hidden flex-col justify-between p-8 overflow-hidden"
+        class="fixed inset-0 z-[100] bg-gold-light/95 backdrop-blur-2xl hidden flex-col justify-between p-8 overflow-hidden"
         style="clip-path: circle(0% at 100% 0%);">
         <div
-            class="absolute -bottom-20 -right-20 text-[20rem] font-display font-bold text-white/5 pointer-events-none select-none leading-none">
+            class="absolute -bottom-20 -right-20 text-[20rem] font-display font-bold text-burgundy/5 pointer-events-none select-none leading-none">
             AS</div>
-        <div class="flex justify-between items-center w-full">
+        <div class="flex justify-between items-center w-full relative z-10">
             <span
-                class="font-mono text-xs text-sage tracking-widest border border-sage/20 px-2 py-1 rounded">NAVIGATION</span>
+                class="font-mono text-xs text-burgundy tracking-widest border border-burgundy/20 bg-white/50 px-3 py-1 rounded-full shadow-sm">NAVIGATION</span>
             <button id="close-mobile"
-                class="text-white hover:text-sage transition-colors p-2 bg-white/5 rounded-full"><i data-lucide="x"
-                    class="w-8 h-8"></i></button>
+                class="text-burgundy hover:text-burgundy-light transition-colors p-2 bg-white/50 rounded-full shadow-sm"><i
+                    data-lucide="x" class="w-7 h-7"></i></button>
         </div>
-        <div class="flex flex-col justify-center h-full gap-4">
+        <div class="flex flex-col justify-center h-full gap-6 relative z-10">
             <a href="#home"
-                class="mobile-link font-display text-6xl md:text-7xl font-bold stroke-text tracking-tighter">HOME</a>
+                class="mobile-link font-display text-3xl sm:text-4xl md:text-5xl font-bold text-burgundy/70 hover:text-burgundy tracking-wide transition-all hover:translate-x-3">HOME</a>
             <a href="#skills"
-                class="mobile-link font-display text-6xl md:text-7xl font-bold stroke-text tracking-tighter">SKILLS</a>
+                class="mobile-link font-display text-3xl sm:text-4xl md:text-5xl font-bold text-burgundy/70 hover:text-burgundy tracking-wide transition-all hover:translate-x-3">SKILLS</a>
+            <a href="#journey"
+                class="mobile-link font-display text-3xl sm:text-4xl md:text-5xl font-bold text-burgundy/70 hover:text-burgundy tracking-wide transition-all hover:translate-x-3">JOURNEY</a>
             <a href="#work"
-                class="mobile-link font-display text-6xl md:text-7xl font-bold stroke-text tracking-tighter">WORK</a>
+                class="mobile-link font-display text-3xl sm:text-4xl md:text-5xl font-bold text-burgundy/70 hover:text-burgundy tracking-wide transition-all hover:translate-x-3">WORK</a>
             <a href="#contact"
-                class="mobile-link font-display text-6xl md:text-7xl font-bold stroke-text tracking-tighter">CONTACT</a>
+                class="mobile-link font-display text-3xl sm:text-4xl md:text-5xl font-bold text-burgundy/70 hover:text-burgundy tracking-wide transition-all hover:translate-x-3">CONTACT</a>
         </div>
-        <div class="flex justify-between items-end border-t border-white/10 pt-6">
-            <div class="flex gap-6 text-zinc-400">
-                <a href="#" class="hover:text-white transition-colors"><i data-lucide="github"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i data-lucide="linkedin"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i data-lucide="twitter"></i></a>
+        <div class="flex justify-between items-end border-t border-burgundy/10 pt-6 relative z-10">
+            <div class="flex gap-6 text-burgundy-muted">
+                <a href="#" class="hover:text-burgundy transition-colors"><i data-lucide="github"></i></a>
+                <a href="#" class="hover:text-burgundy transition-colors"><i data-lucide="linkedin"></i></a>
+                <a href="#" class="hover:text-burgundy transition-colors"><i data-lucide="twitter"></i></a>
             </div>
             <div class="text-right">
-                <p class="text-[10px] font-mono text-zinc-500 tracking-widest">LOCAL TIME</p>
-                <p class="text-xs font-mono text-sage" id="mobile-live-time">00:00 IST</p>
+                <p class="text-[10px] font-mono text-burgundy-muted tracking-widest">LOCAL TIME</p>
+                <p class="text-xs font-mono text-burgundy font-bold" id="mobile-live-time">00:00 IST</p>
             </div>
         </div>
     </div>
@@ -115,108 +121,189 @@
 
         <!-- HERO SECTION -->
         <section id="home" class="min-h-screen flex items-center justify-center px-6 pt-24 md:pt-0 relative">
-            <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div class="max-w-7xl w-full flex flex-col justify-center items-start">
 
-                <!-- Text Content (Left) -->
-                <!-- Removed 'opacity-0' class to allow JS to handle visibility, but defaulted to visible in case JS fails -->
-                <div class="order-2 lg:order-1 z-10 hero-content opacity-0">
-                    <p class="text-periwinkle font-mono text-xs md:text-sm mb-4 tracking-[0.2em]">DATA SCIENCE STUDENT</p>
+                <!-- Text Content -->
+                <div class="z-10 opacity-0 animate-fade-in-up max-w-4xl" style="animation-delay: 0.5s;">
+                    <p class="text-burgundy-light font-mono text-xs md:text-sm mb-4 tracking-[0.2em] font-bold">DATA
+                        SCIENTIST & CREATIVE</p>
 
-                    <h1 class="font-display font-extrabold text-5xl md:text-8xl leading-[0.9] mb-6 tracking-tight">
-                        <span
-                            class="block text-transparent bg-clip-text bg-gradient-to-r from-sage to-white">AMAL</span>
-                        <span class="block text-white">SONU</span>
+                    <h1
+                        class="font-display font-extrabold text-6xl md:text-8xl lg:text-9xl leading-[0.9] mb-8 tracking-tight">
+                        <span class="block text-burgundy drop-shadow-sm">AMAL</span>
+                        <span class="block text-charcoal drop-shadow-sm">SONU</span>
                     </h1>
 
-                    <!-- DESCRIPTION -->
-                    <div class="flex flex-col gap-6 mt-8 border-l-2 border-sage pl-6">
-                        <p class="max-w-lg text-white text-base md:text-lg leading-relaxed font-medium">
-                            I am a passionate tech enthusiast currently pursuing my
-                            <span class="text-sage font-bold">BCA in AI & Data Science (2nd Year)</span>
-                            at <span class="text-sage font-bold">Chinmaya Vishwa Vidhyapeeth</span>.
+                    <!-- DESCRIPTION (UPDATED FROM CV) -->
+                    <div class="flex flex-col gap-6 mt-8 border-l-4 border-burgundy/30 pl-6 md:pl-8">
+                        <p class="text-burgundy text-lg md:text-xl leading-relaxed font-bold">
+                            Passionate Programmer & BCA Student (AI & Data Science) at
+                            <span class="text-burgundy-light border-b-2 border-burgundy/20 pb-0.5">Chinmaya Vishwa
+                                Vidhyapeeth</span>.
                         </p>
 
-                        <p class="max-w-lg text-zinc-200 text-sm md:text-base leading-relaxed">
-                            Specializing in bridging the gap between complex Deep Learning algorithms and intuitive,
-                            aesthetic web interfaces. Building the future, one line of code at a time.
+                        <p class="text-burgundy-muted text-base md:text-lg leading-relaxed font-medium">
+                            With a disciplined approach to software structure and efficiency, I have built a strong core
+                            in Python and Java (OOP), specializing in Deep Learning architectures to solve real-world
+                            problems. My technical journey bridges the gap between intelligent backend models and
+                            responsive web experiences.
                         </p>
 
-                        <div class="flex gap-4 mt-2">
+                        <div class="flex flex-wrap gap-4 mt-6">
                             <a href="#work"
-                                class="px-8 py-3 bg-sage text-dark font-bold text-sm tracking-widest rounded hover:bg-white transition-all transform hover:-translate-y-1">
-                                PROJECTS
+                                class="px-8 py-3.5 bg-burgundy text-gold-accent font-bold text-sm tracking-widest rounded-md hover:bg-burgundy-light transition-all transform hover:-translate-y-1 shadow-lg shadow-burgundy/20">
+                                VIEW PROJECTS
                             </a>
                             <a href="#contact"
-                                class="px-8 py-3 border border-white/20 text-white font-bold text-sm tracking-widest rounded hover:bg-white hover:text-dark transition-all transform hover:-translate-y-1">
+                                class="px-8 py-3.5 bg-white/50 border border-burgundy/20 text-burgundy font-bold text-sm tracking-widest rounded-md hover:bg-white hover:border-burgundy/50 transition-all transform hover:-translate-y-1 shadow-sm">
                                 CONTACT
                             </a>
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <!-- Scroll Indicator -->
             <div
-                class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden md:flex flex-col items-center gap-2 opacity-50">
-                <span class="text-[10px] font-mono tracking-widest text-zinc-500">SCROLL</span>
-                <i data-lucide="chevron-down" class="w-4 h-4 text-sage"></i>
+                class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden md:flex flex-col items-center gap-2 opacity-60">
+                <span class="text-[10px] font-mono tracking-widest text-burgundy-muted font-bold">SCROLL</span>
+                <i data-lucide="chevron-down" class="w-4 h-4 text-burgundy"></i>
             </div>
         </section>
 
         <!-- SKILLS SECTION -->
-        <section id="skills" class="py-24 px-6 relative">
+        <section id="skills" class="py-24 px-6 relative z-10">
             <div class="max-w-7xl mx-auto">
                 <div
-                    class="mb-16 border-b border-white/10 pb-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
+                    class="mb-16 border-b border-burgundy/10 pb-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
                     <div>
-                        <h2 class="font-display font-bold text-3xl md:text-5xl text-white">Proficiency</h2>
-                        <p class="text-zinc-400 mt-2 text-sm max-w-sm">A curated arsenal of tools I use to build
-                            scalable, intelligent digital products.</p>
+                        <h2 class="font-display font-bold text-3xl md:text-5xl text-burgundy">Proficiency</h2>
+                        <p class="text-burgundy-muted mt-3 text-sm md:text-base max-w-sm font-medium">A curated arsenal
+                            of tools and skills I use to build intelligent digital products.</p>
                     </div>
-                    <span class="text-sage font-mono text-xs border border-sage/20 px-2 py-1 rounded">STACK_2025</span>
+                    <span
+                        class="text-burgundy font-mono text-xs border border-burgundy/20 bg-white/50 px-3 py-1.5 rounded-md font-bold">STACK_2025</span>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                    <!-- Frontend Card -->
-                    <div class="glass-panel p-8 rounded-xl skill-card">
-                        <div class="flex items-center gap-3 mb-6 text-sage">
-                            <i data-lucide="layout" class="w-6 h-6"></i>
-                            <h3 class="font-display font-bold text-xl text-white">Programming</h3>
+                    <!-- Core & Web Card -->
+                    <div class="glass-panel p-8 rounded-2xl skill-card relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl -mr-10 -mt-10 opacity-50 pointer-events-none">
                         </div>
-                        <div class="flex flex-wrap content-start">
+                        <div class="flex items-center gap-3 mb-8 text-burgundy relative z-10">
+                            <div class="p-3 bg-white rounded-xl shadow-sm border border-burgundy/5">
+                                <i data-lucide="code-2" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="font-display font-bold text-2xl">Core & Web</h3>
+                        </div>
+                        <div class="flex flex-wrap content-start relative z-10">
                             <span class="skill-tag">HTML5</span>
                             <span class="skill-tag">CSS3</span>
                             <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">C</span>
-                            <span class="skill-tag">OOPS in Java</span>
+                            <span class="skill-tag">Java (OOP)</span>
+                            <span class="skill-tag">C Program</span>
                         </div>
                     </div>
 
                     <!-- AI/ML Card -->
-                    <div class="glass-panel p-8 rounded-xl skill-card">
-                        <div class="flex items-center gap-3 mb-6 text-periwinkle">
-                            <i data-lucide="brain-circuit" class="w-6 h-6"></i>
-                            <h3 class="font-display font-bold text-xl text-white">Data Science</h3>
+                    <div class="glass-panel p-8 rounded-2xl skill-card relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl -mr-10 -mt-10 opacity-50 pointer-events-none">
                         </div>
-                        <div class="flex flex-wrap content-start">
+                        <div class="flex items-center gap-3 mb-8 text-burgundy relative z-10">
+                            <div class="p-3 bg-white rounded-xl shadow-sm border border-burgundy/5">
+                                <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="font-display font-bold text-2xl">Data Science</h3>
+                        </div>
+                        <div class="flex flex-wrap content-start relative z-10">
                             <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Pandas</span>
                             <span class="skill-tag">NumPy</span>
                             <span class="skill-tag">OpenCV</span>
                             <span class="skill-tag">SQL</span>
                         </div>
                     </div>
 
-                    <!-- Backend/Tools Card -->
-                    <div class="glass-panel p-8 rounded-xl skill-card">
-                        <div class="flex items-center gap-3 mb-6 text-zinc-400">
-                            <i data-lucide="terminal" class="w-6 h-6"></i>
-                            <h3 class="font-display font-bold text-xl text-white">Tools</h3>
+                    <!-- Soft Skills & Tools Card -->
+                    <div class="glass-panel p-8 rounded-2xl skill-card relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl -mr-10 -mt-10 opacity-50 pointer-events-none">
                         </div>
-                        <div class="flex flex-wrap content-start">
+                        <div class="flex items-center gap-3 mb-8 text-burgundy relative z-10">
+                            <div class="p-3 bg-white rounded-xl shadow-sm border border-burgundy/5">
+                                <i data-lucide="users" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="font-display font-bold text-2xl">Soft Skills & Tools</h3>
+                        </div>
+                        <div class="flex flex-wrap content-start relative z-10">
+                            <span class="skill-tag">Leadership</span>
+                            <span class="skill-tag">Management</span>
+                            <span class="skill-tag">Time Management</span>
                             <span class="skill-tag">Git & GitHub</span>
-                            <span class="skill-tag">VS Code</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE & EDUCATION SECTION -->
+        <section id="journey" class="py-24 px-6 border-t border-burgundy/10 relative z-10">
+            <div class="max-w-7xl mx-auto">
+                <div
+                    class="mb-16 border-b border-burgundy/10 pb-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
+                    <div>
+                        <h2 class="font-display font-bold text-3xl md:text-5xl text-burgundy">Journey</h2>
+                        <p class="text-burgundy-muted mt-3 text-sm md:text-base max-w-sm font-medium">My academic
+                            background and professional experience.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                    <!-- Education -->
+                    <div class="glass-panel p-8 md:p-10 rounded-3xl relative overflow-hidden group">
+                        <div
+                            class="absolute top-0 right-0 w-40 h-40 bg-white rounded-full blur-3xl -mr-10 -mt-10 opacity-50 pointer-events-none group-hover:scale-150 transition-transform duration-700">
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-3 mb-6">
+                                <span
+                                    class="px-3 py-1 border border-burgundy/20 text-burgundy text-[10px] tracking-widest font-bold bg-white/50 rounded-full shadow-sm">EDUCATION</span>
+                            </div>
+                            <h3 class="font-display font-bold text-2xl md:text-3xl text-burgundy mb-2">Bachelor of
+                                Computer Application (AI & DS)</h3>
+                            <p class="text-burgundy-light font-bold text-lg mb-1">Chinmaya Vishwa Vidhyapeeth</p>
+                            <p class="text-burgundy-muted font-mono text-xs mb-6 tracking-wider">ONAKKOOR, ERNAKULAM |
+                                2024 - 2028</p>
+                            <p class="text-burgundy/80 text-sm md:text-base font-medium leading-relaxed">
+                                Developing a hybrid expertise in Deep Learning architectures and robust software
+                                engineering.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Experience -->
+                    <div class="glass-panel p-8 md:p-10 rounded-3xl relative overflow-hidden group">
+                        <div
+                            class="absolute top-0 right-0 w-40 h-40 bg-white rounded-full blur-3xl -mr-10 -mt-10 opacity-50 pointer-events-none group-hover:scale-150 transition-transform duration-700">
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-3 mb-6">
+                                <span
+                                    class="px-3 py-1 border border-burgundy/20 text-burgundy text-[10px] tracking-widest font-bold bg-white/50 rounded-full shadow-sm">EXPERIENCE</span>
+                            </div>
+                            <h3 class="font-display font-bold text-2xl md:text-3xl text-burgundy mb-2">Assistant Staff
+                            </h3>
+                            <p class="text-burgundy-light font-bold text-lg mb-1">Janshree Kendram</p>
+                            <p class="text-burgundy-muted font-mono text-xs mb-6 tracking-wider">ERNAKULAM, KERALA</p>
+                            <p class="text-burgundy/80 text-sm md:text-base font-medium leading-relaxed">
+                                Enhanced community service delivery by managing government portals and streamlining
+                                customer interactions to improve operational efficiency.
+                            </p>
                         </div>
                     </div>
 
@@ -225,86 +312,89 @@
         </section>
 
         <!-- WORK SECTION -->
-        <section id="work" class="py-24 px-6 bg-card/50 border-t border-white/5">
+        <section id="work" class="py-24 px-6 border-t border-burgundy/10 relative z-10">
             <div class="max-w-7xl mx-auto">
-                <h2 class="font-display font-bold text-4xl md:text-6xl text-white mb-16">Selected Works</h2>
+                <h2 class="font-display font-bold text-4xl md:text-6xl text-burgundy mb-16">Selected Works</h2>
 
                 <div class="space-y-16">
-                    <!-- Project 1 (Number Left Adjusted) -->
-                    <div class="glass-panel p-8 md:p-12 rounded-2xl project-card group relative overflow-hidden">
+                    <!-- Project 1 (Updated to ARCADIA) -->
+                    <div class="glass-panel p-8 md:p-12 rounded-3xl project-card group relative overflow-hidden">
                         <div
-                            class="absolute top-0 right-0 p-40 bg-sage/5 rounded-full blur-3xl -mr-20 -mt-20 transition-all duration-500 group-hover:bg-sage/15">
+                            class="absolute top-0 right-0 p-40 bg-white/40 rounded-full blur-3xl -mr-20 -mt-20 transition-all duration-500 group-hover:bg-white/60 pointer-events-none">
                         </div>
 
-                        <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                        <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
                             <!-- Number Column (Left Side) -->
                             <div
-                                class="flex items-center justify-start h-full md:pr-12 border-b md:border-b-0 md:border-r border-white/5 pb-8 md:pb-0">
+                                class="md:col-span-4 flex items-center justify-start md:pr-12 border-b md:border-b-0 md:border-r border-burgundy/10 pb-8 md:pb-0">
                                 <span
-                                    class="font-display font-bold text-[8rem] md:text-[10rem] leading-none text-white/5 select-none group-hover:text-sage/10 transition-colors">01</span>
+                                    class="font-display font-bold text-[7rem] md:text-[9rem] leading-none text-burgundy/10 select-none group-hover:text-burgundy/20 transition-colors drop-shadow-sm">01</span>
                             </div>
 
                             <!-- Content Column (Right Side) -->
-                            <div class="flex flex-col justify-center h-full">
-                                <div class="flex items-center gap-3 mb-4">
+                            <div class="md:col-span-8 flex flex-col justify-center py-4">
+                                <div class="flex items-center gap-3 mb-5">
                                     <span
-                                        class="px-2 py-1 border border-sage/50 text-sage text-[10px] tracking-widest font-bold bg-sage/5">FEATURED</span>
+                                        class="px-3 py-1 border border-burgundy/20 text-burgundy text-[10px] tracking-widest font-bold bg-white/50 rounded-full shadow-sm">FEATURED</span>
                                 </div>
                                 <h3
-                                    class="font-display font-bold text-3xl md:text-5xl text-white mb-2 group-hover:text-periwinkle transition-colors">
-                                    IKARA</h3>
-                                <p class="text-zinc-500 font-mono text-xs mb-6 tracking-wide">INDIAN KNOWLEDGE &
-                                    ARTISTRY RECOGNITION ALGORITHM</p>
-                                <p class="text-zinc-300 leading-relaxed text-sm md:text-base mb-6">
-                                    A deep learning system preserving heritage by classifying traditional Indian art
-                                    forms using custom CNN architectures. Achieved 95% accuracy on custom datasets.
+                                    class="font-display font-bold text-3xl md:text-5xl text-burgundy mb-3 group-hover:text-burgundy-light transition-colors">
+                                    ARCADIA</h3>
+                                <p class="text-burgundy-muted font-mono text-xs mb-6 tracking-wider font-bold">ANCIENT
+                                    RECOGNITION AND CLASSIFICATION FOR ART DISCOVERY USING INTELLIGENT AI</p>
+                                <p
+                                    class="text-burgundy/80 leading-relaxed text-sm md:text-base mb-8 font-medium max-w-2xl">
+                                    A deep learning system preserving heritage by classifying traditional art forms
+                                    using custom CNN architectures. Achieved 95% accuracy on custom datasets.
                                 </p>
-                                <div class="flex flex-wrap gap-3 text-xs font-mono text-zinc-400 mb-8">
-                                    <span class="bg-white/5 px-2 py-1 rounded">React</span>
-                                    <span class="bg-white/5 px-2 py-1 rounded">TensorFlow</span>
-                                    <span class="bg-white/5 px-2 py-1 rounded">Python</span>
+                                <div>
+                                    <a href="https://scanart-artrecognisation.lovable.app/" target="_blank"
+                                        class="inline-flex items-center gap-2 text-burgundy border-b-2 border-burgundy/20 hover:border-burgundy pb-1 transition-all font-bold">
+                                        View Deployment <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                                    </a>
                                 </div>
-                                <a href="https://scanart-artrecognisation.lovable.app/" target="_blank"
-                                    class="inline-flex items-center gap-2 text-white border-b border-white/20 hover:border-sage hover:text-sage pb-1 transition-all">
-                                    View Deployment <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                                </a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Project 2 (Number Right Adjusted) -->
-
+                    <!-- Additional projects can be added here following the same structure as above -->
 
                 </div>
             </div>
         </section>
 
         <!-- FOOTER -->
-        <footer id="contact" class="py-20 px-6 border-t border-white/5 relative overflow-hidden">
-            <div class="absolute inset-0 bg-sage/5 opacity-0 hover:opacity-100 transition-opacity duration-700"></div>
+        <footer id="contact" class="py-20 px-6 border-t border-burgundy/10 relative overflow-hidden z-10">
+            <div
+                class="absolute inset-0 bg-white/20 opacity-0 hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+            </div>
 
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12 relative z-10">
                 <div>
-                    <h2 class="font-display font-bold text-5xl md:text-7xl text-white mb-6">Let's Connect</h2>
+                    <h2 class="font-display font-bold text-5xl md:text-7xl text-burgundy mb-6">Let's Connect</h2>
                     <a href="mailto:amalsonuoff@gmail.com"
-                        class="text-xl md:text-3xl text-zinc-400 hover:text-sage transition-colors border-b border-zinc-700 hover:border-sage pb-2">amalsonuoff@gmail.com</a>
+                        class="text-xl md:text-3xl text-burgundy-light font-medium hover:text-burgundy transition-colors border-b-2 border-burgundy/20 hover:border-burgundy pb-2 mb-6 inline-block">amalsonuoff@gmail.com</a>
+                    <div class="flex flex-col gap-2 text-burgundy-muted font-medium mt-4">
+                        <p class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> +91 8921746693
+                        </p>
+                        <p class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Ernakulam,
+                            Kerala, India</p>
+                    </div>
                 </div>
-                <div class="flex gap-8">
-                    <a href="#"
-                        class="p-3 bg-white/5 rounded-full text-zinc-400 hover:text-white hover:bg-sage transition-all"><i
-                            data-lucide="github"></i></a>
-                    <a href="#"
-                        class="p-3 bg-white/5 rounded-full text-zinc-400 hover:text-white hover:bg-periwinkle transition-all"><i
-                            data-lucide="linkedin"></i></a>
-                    <a href="#"
-                        class="p-3 bg-white/5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-700 transition-all"><i
-                            data-lucide="twitter"></i></a>
+                <div class="flex gap-6">
+                    <a href="https://github.com/amalsonu"
+                        class="p-4 bg-white/60 rounded-2xl shadow-sm text-burgundy hover:text-gold hover:bg-burgundy transition-all border border-burgundy/10 hover:-translate-y-1"><i
+                            data-lucide="github" class="w-6 h-6"></i></a>
+                    <a href="https://www.linkedin.com/in/amal-sonu-09298a320/"
+                        class="p-4 bg-white/60 rounded-2xl shadow-sm text-burgundy hover:text-gold hover:bg-burgundy transition-all border border-burgundy/10 hover:-translate-y-1"><i
+                            data-lucide="linkedin" class="w-6 h-6"></i></a>
                 </div>
             </div>
             <div
-                class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-zinc-600 text-xs font-mono">
+                class="max-w-7xl mx-auto mt-16 pt-8 border-t border-burgundy/10 flex flex-col md:flex-row justify-between items-center text-burgundy-muted text-xs font-mono font-bold">
                 <p>© 2025 AMAL SONU. ALL RIGHTS RESERVED.</p>
-                <p>MADE WITH <i data-lucide="heart" class="inline w-3 h-3 text-red-500"></i> & CODE</p>
+                <p class="mt-4 md:mt-0">MADE WITH <i data-lucide="heart"
+                        class="inline w-3 h-3 text-burgundy fill-current"></i> & CODE</p>
             </div>
         </footer>
 
@@ -313,6 +403,4 @@
     <script src="scripts.js"></script>
 </body>
 
-
 </html>
-
