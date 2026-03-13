@@ -1,169 +1,212 @@
-/* --- GLOBAL STYLES --- */
-body {
-    background-color: #FAF7E6;
-    color: #5B0E14;
-    overflow-x: hidden;
-    cursor: auto;
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                burgundy: {
+                    DEFAULT: '#5B0E14',
+                    light: '#8A252E',
+                    muted: 'rgba(91, 14, 20, 0.7)',
+                    faded: 'rgba(91, 14, 20, 0.4)'
+                },
+                gold: {
+                    DEFAULT: '#FAF7E6', /* Whitish creamy gold */
+                    accent: '#F1E194',  /* Vibrant gold for accents */
+                    light: '#FDF7D5',
+                    dark: '#D4C16A',
+                },
+                charcoal: '#1F1A1A' /* Distinct color for SONU */
+            },
+            fontFamily: {
+                display: ['Syne', 'sans-serif'],
+                body: ['Manrope', 'sans-serif'],
+            },
+            animation: {
+                'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                'spin-slow': 'spin 15s linear infinite',
+            },
+            keyframes: {
+                fadeInUp: {
+                    '0%': { opacity: '0', transform: 'translateY(20px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                }
+            },
+            backgroundImage: {
+                'noise': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.05%22/%3E%3C/svg%3E')"
+            }
+        }
+    }
 }
 
-::selection {
-    background: #5B0E14;
-    color: #FAF7E6;
+// --- SETUP ---
+lucide.createIcons();
+
+// --- TIME WIDGET ---
+function updateTime() {
+    const now = new Date();
+    const options = {
+        timeZone: 'Asia/Kolkata',
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    };
+    const timeString = now.toLocaleString('en-IN', options);
+    document.getElementById('live-time').innerText = timeString;
+
+    const mobileTimeEl = document.getElementById('mobile-live-time');
+    if (mobileTimeEl) mobileTimeEl.innerText = timeString;
+}
+setInterval(updateTime, 1000);
+updateTime();
+
+// --- MOBILE MENU ---
+const mobileBtn = document.getElementById('mobile-btn');
+const closeMobile = document.getElementById('close-mobile');
+const mobileMenu = document.getElementById('mobile-menu');
+
+function openMenu() {
+    mobileMenu.classList.remove('hidden');
+    mobileMenu.classList.add('flex');
+
+    // Curtain Reveal
+    gsap.fromTo(mobileMenu,
+        { clipPath: "circle(0% at 100% 0%)" },
+        { clipPath: "circle(150% at 100% 0%)", duration: 0.8, ease: "power4.inOut" }
+    );
+
+    gsap.fromTo(".mobile-link",
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, delay: 0.2, ease: "power3.out" }
+    );
 }
 
-/* --- LOADER --- */
-#loader {
-    position: fixed;
-    inset: 0;
-    background: #FAF7E6;
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+function closeMenu() {
+    gsap.to(mobileMenu, {
+        clipPath: "circle(0% at 100% 0%)",
+        duration: 0.6,
+        ease: "power4.inOut",
+        onComplete: () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+        }
+    });
 }
 
-/* --- SCROLL PROGRESS --- */
-#progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #8A252E, #5B0E14);
-    width: 0%;
-    z-index: 10000;
-    border-radius: 0 2px 2px 0;
-}
+mobileBtn.addEventListener('click', openMenu);
+closeMobile.addEventListener('click', closeMenu);
+document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+});
 
-/* --- UI ELEMENTS --- */
-.glass-panel {
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 8px 32px rgba(91, 14, 20, 0.05);
-}
+// --- SCROLL PROGRESS ---
+window.onscroll = function () {
+    let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let scrolled = (winScroll / height) * 100;
+    document.getElementById("progress-bar").style.width = scrolled + "%";
+};
 
-.glass-panel:hover {
-    border-color: rgba(91, 14, 20, 0.3);
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(91, 14, 20, 0.1);
-}
+// --- ANIMATIONS ---
+window.onload = () => {
+    gsap.registerPlugin(ScrollTrigger);
+    const tl = gsap.timeline();
 
-/* --- NAV LINKS --- */
-.nav-link {
-    position: relative;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    font-weight: 700;
-    color: rgba(91, 14, 20, 0.7);
-    transition: color 0.3s;
-}
+    // 1. Initial State
+    const fullText = document.getElementById('loader-full');
+    const shortText = document.getElementById('loader-short');
+    const navLogo = document.getElementById('nav-logo');
 
-.nav-link:hover {
-    color: #5B0E14;
-}
+    // 2. Merge Animation
+    tl.to(fullText, { opacity: 0, scale: 0.5, duration: 0.5, ease: "power2.inOut" })
+        .to(shortText, { opacity: 1, scale: 1, duration: 0.5, ease: "power2.inOut" }, "<")
 
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background: #5B0E14;
-    transition: width 0.3s;
-}
+        // 3. Move to Corner
+        .add(() => {
+            const rect = navLogo.getBoundingClientRect();
+            const startRect = shortText.getBoundingClientRect();
+            const targetX = rect.width ? rect.left : 24;
+            const targetY = rect.width ? rect.top : 24;
 
-.nav-link:hover::after {
-    width: 100%;
-}
+            gsap.to(shortText, {
+                x: targetX - startRect.left,
+                y: targetY - startRect.top,
+                scale: 0.4,
+                duration: 0.6,
+                ease: "power4.inOut",
+                onComplete: () => {
+                    shortText.style.opacity = 0;
+                    navLogo.style.opacity = 1;
+                }
+            });
+        })
 
-/* --- IMAGE CONTAINER --- */
-.image-container {
-    position: relative;
-    overflow: hidden;
-    background: #FDF7D5;
-}
+        // 4. Reveal Site & Hero Content
+        .to("#loader", { height: 0, duration: 0.8, ease: "power4.inOut" }, "-=0.3");
 
-.image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    // Scroll Triggers
+    gsap.utils.toArray('.skill-card').forEach((card, i) => {
+        gsap.from(card, {
+            scrollTrigger: { trigger: "#skills", start: "top 85%" },
+            y: 50, opacity: 0, duration: 0.8, delay: i * 0.1, ease: "power2.out"
+        });
+    });
 
-/* --- SKILL TAGS --- */
-.skill-tag {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 16px;
-    margin: 4px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(91, 14, 20, 0.15);
-    border-radius: 6px;
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #5B0E14;
-    transition: all 0.2s ease;
-}
+    gsap.utils.toArray('.project-card').forEach(card => {
+        gsap.from(card, {
+            scrollTrigger: { trigger: card, start: "top 90%" },
+            y: 50, opacity: 0, duration: 0.8, ease: "power2.out"
+        });
+    });
+};
 
-.skill-tag:hover {
-    background: #5B0E14;
-    color: #F1E194;
-    border-color: #5B0E14;
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(91, 14, 20, 0.2);
-}
+// --- THREE.JS BACKGROUND ---
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
-/* --- MOBILE MENU STYLES --- */
-.stroke-text {
-    -webkit-text-stroke: 1px rgba(91, 14, 20, 0.4);
-    color: transparent;
-    transition: all 0.3s ease;
-}
+const container = document.getElementById('webgl');
+renderer.setSize(window.innerWidth, window.innerHeight);
+container.appendChild(renderer.domElement);
 
-.stroke-text:hover,
-.stroke-text:active {
-    -webkit-text-stroke: 0px;
-    color: #5B0E14;
-    transform: translateX(10px);
-}
+// Updated colors to match Burgundy
+const geometry = new THREE.IcosahedronGeometry(4, 1);
+const material = new THREE.MeshBasicMaterial({ color: 0x5B0E14, wireframe: true, transparent: true, opacity: 0.15 });
+const sphere = new THREE.Mesh(geometry, material);
+scene.add(sphere);
 
-#webgl {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.6;
-    pointer-events: none;
-}
+const pGeo = new THREE.BufferGeometry();
+const pCount = 600;
+const pPos = new Float32Array(pCount * 3);
+for (let i = 0; i < pCount * 3; i++) pPos[i] = (Math.random() - 0.5) * 40;
+pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+const pMat = new THREE.PointsMaterial({ size: 0.06, color: 0x5B0E14, transparent: true, opacity: 0.25 });
+const particles = new THREE.Points(pGeo, pMat);
+scene.add(particles);
 
-.tabular-nums {
-    font-variant-numeric: tabular-nums;
-}
+camera.position.z = 10;
 
-.hero-text-visible {
-    opacity: 1 !important;
-    transform: none !important;
-}
+let mouseX = 0, mouseY = 0;
+document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
 
-/* Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
+function animate() {
+    requestAnimationFrame(animate);
+    sphere.rotation.y += 0.002;
+    sphere.rotation.x += 0.001;
+    sphere.rotation.y += mouseX * 0.02;
+    sphere.rotation.x += mouseY * 0.02;
+    particles.rotation.y = -Date.now() * 0.0001;
+    renderer.render(scene, camera);
 }
+animate();
 
-::-webkit-scrollbar-track {
-    background: #FAF7E6;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(91, 14, 20, 0.3);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #5B0E14;
-}
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
