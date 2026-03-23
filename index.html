@@ -15,16 +15,200 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Grayscale Palette with pure black background
+                        bgMain: '#000000',     // Pure Black
+                        bgCard: '#1c1b1a',     // Darkest Gray
+                        borderGray: '#3a3937', // Dark Gray
+                        textMuted: '#8a8987',  // Medium Gray
+                        textAccent: '#c5c4bf', // Light Gray
+                        textMain: '#f8f7f3'    // Off-white
+                    },
+                    fontFamily: {
+                        display: ['Syne', 'sans-serif'],
+                        body: ['Manrope', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                        'spin-slow': 'spin 15s linear infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    },
+                    backgroundImage: {
+                        'noise': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.08%22/%3E%3C/svg%3E')"
+                    }
+                }
+            }
+        }
+    </script>
 
     <!-- Icons & Libraries -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
+    <style>
+        /* --- GLOBAL STYLES --- */
+        body {
+            background-color: #000000;
+            background-image: radial-gradient(circle at 50% 0%, #1c1b1a 0%, #000000 70%);
+            color: #f8f7f3;
+            overflow-x: hidden;
+            cursor: auto;
+        }
+
+        ::selection {
+            background: #c5c4bf;
+            color: #000000;
+        }
+
+        /* --- LOADER --- */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #000000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- SCROLL PROGRESS --- */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3a3937, #c5c4bf);
+            width: 0%;
+            z-index: 10000;
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* --- UI ELEMENTS --- */
+        .glass-panel {
+            background: rgba(28, 27, 26, 0.4);
+            /* Charcoal tint */
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(58, 57, 55, 0.3);
+            /* Dark Grey border */
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            will-change: transform;
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(197, 196, 191, 0.4);
+            /* Light Gray border on hover */
+            box-shadow: 0 12px 40px rgba(197, 196, 191, 0.15);
+        }
+
+        /* --- NAV LINKS --- */
+        .nav-link {
+            position: relative;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            color: #8a8987;
+            /* Medium Gray */
+            transition: color 0.3s, transform 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #f8f7f3;
+            /* Off-white */
+            transform: translateY(-1px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #f8f7f3;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* --- SKILL TAGS --- */
+        .skill-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            margin: 4px;
+            background: rgba(28, 27, 26, 0.6);
+            /* Dark Charcoal */
+            border: 1px solid rgba(58, 57, 55, 0.4);
+            border-radius: 6px;
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #f8f7f3;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .skill-tag:hover {
+            background: #c5c4bf;
+            /* Light Gray */
+            color: #000000;
+            /* Black */
+            border-color: #c5c4bf;
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 4px 15px rgba(197, 196, 191, 0.25);
+        }
+
+        #webgl {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .tabular-nums {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3a3937;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8a8987;
+        }
+    </style>
+
     <link rel="stylesheet" href="styles.css">
 </head>
-
 
 <body class="font-body">
 
@@ -35,10 +219,10 @@
     <div id="loader">
         <div class="relative flex items-center justify-center">
             <h1 id="loader-full" class="font-display font-bold text-5xl md:text-7xl tracking-tighter absolute">
-                <span class="text-burgundy">AMAL</span> <span class="text-charcoal">SONU</span>
+                <span class="text-textMain">AMAL</span> <span class="text-textAccent">SONU</span>
             </h1>
             <h1 id="loader-short"
-                class="font-display font-bold text-5xl md:text-7xl text-burgundy tracking-tighter absolute opacity-0 scale-50">
+                class="font-display font-bold text-5xl md:text-7xl text-textMain tracking-tighter absolute opacity-0 scale-50">
                 AMAL
             </h1>
         </div>
@@ -46,72 +230,87 @@
 
     <!-- BACKGROUNDS -->
     <div id="webgl"></div>
-    <div class="fixed inset-0 bg-noise opacity-40 pointer-events-none z-0"></div>
+    <div class="fixed inset-0 bg-noise opacity-[0.04] pointer-events-none z-0"></div>
 
     <!-- NAVIGATION -->
-    <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-gold/80 backdrop-blur-md border-b border-burgundy/10 transition-all duration-300"
+    <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-bgMain/90 backdrop-blur-md border-b border-borderGray/30 transition-all duration-300"
         id="navbar">
         <div class="flex items-center gap-6">
-            <a href="#home" id="nav-logo" class="font-display font-bold text-2xl text-burgundy opacity-0">AMAL</a>
+            <a href="#home" id="nav-logo" class="font-display font-bold text-2xl text-textMain opacity-0">AMAL</a>
 
             <!-- Live Time Widget -->
             <div
-                class="flex items-center gap-2 px-3 py-1 rounded-full border border-burgundy/20 bg-white/50 text-xs font-mono text-burgundy-muted tabular-nums shadow-sm">
-                <div class="w-2 h-2 rounded-full bg-green-600 animate-pulse"></div>
+                class="flex items-center gap-2 px-3 py-1 rounded-full border border-borderGray/50 bg-bgCard/30 text-xs font-mono text-textMuted tabular-nums shadow-sm">
+                <div class="w-2 h-2 rounded-full bg-textAccent animate-pulse shadow-[0_0_8px_#c5c4bf]"></div>
                 <span id="live-time">...</span>
             </div>
         </div>
 
-        <div class="hidden md:flex gap-10">
-            <a href="#home" class="nav-link">Home</a>
-            <a href="#skills" class="nav-link">Skills</a>
-            <a href="#journey" class="nav-link">Journey</a>
-            <a href="#work" class="nav-link">Work</a>
-            <a href="#contact" class="nav-link">Contact</a>
+        <div class="hidden md:flex gap-8">
+            <a href="#about" class="nav-link flex items-center gap-1.5"><i data-lucide="user"
+                    class="w-4 h-4"></i>About</a>
+            <a href="#skills" class="nav-link flex items-center gap-1.5"><i data-lucide="cpu"
+                    class="w-4 h-4"></i>Skills</a>
+            <a href="#journey" class="nav-link flex items-center gap-1.5"><i data-lucide="map"
+                    class="w-4 h-4"></i>Journey</a>
+            <a href="#work" class="nav-link flex items-center gap-1.5"><i data-lucide="folder-open"
+                    class="w-4 h-4"></i>Work</a>
+            <a href="#contact" class="nav-link flex items-center gap-1.5"><i data-lucide="mail"
+                    class="w-4 h-4"></i>Contact</a>
         </div>
-
-        <button class="md:hidden text-burgundy relative group" id="mobile-btn">
+        <button class="md:hidden text-textMain relative group" id="mobile-btn">
             <span
-                class="absolute -inset-2 bg-burgundy/10 rounded-full scale-0 group-hover:scale-100 transition-transform"></span>
-            <i data-lucide="menu" class="w-6 h-6 relative z-10 text-burgundy"></i>
+                class="absolute -inset-2 bg-bgCard/50 rounded-full scale-0 group-hover:scale-100 transition-transform"></span>
+            <i data-lucide="menu" class="w-6 h-6 relative z-10 text-textMain"></i>
         </button>
+        </div>
     </nav>
 
     <!-- MOBILE MENU -->
     <div id="mobile-menu"
-        class="fixed inset-0 z-[100] bg-gold-light/95 backdrop-blur-2xl hidden flex-col justify-between p-8 overflow-hidden"
+        class="fixed inset-0 z-[100] bg-bgMain/98 backdrop-blur-3xl hidden flex-col justify-between p-8 overflow-hidden"
         style="clip-path: circle(0% at 100% 0%);">
         <div
-            class="absolute -bottom-20 -right-20 text-[20rem] font-display font-bold text-burgundy/5 pointer-events-none select-none leading-none">
+            class="absolute -bottom-20 -right-20 text-[20rem] font-display font-bold text-textMain/5 pointer-events-none select-none leading-none">
             AS</div>
         <div class="flex justify-between items-center w-full relative z-10">
             <span
-                class="font-mono text-xs text-burgundy tracking-widest border border-burgundy/20 bg-white/50 px-3 py-1 rounded-full shadow-sm">NAVIGATION</span>
+                class="font-mono text-xs text-textMain tracking-widest border border-borderGray/50 bg-bgCard/30 px-3 py-1 rounded-full shadow-sm">NAVIGATION</span>
             <button id="close-mobile"
-                class="text-burgundy hover:text-burgundy-light transition-colors p-2 bg-white/50 rounded-full shadow-sm"><i
+                class="text-textMain hover:text-textAccent transition-colors p-2 bg-bgCard/30 border border-borderGray/30 rounded-full shadow-sm"><i
                     data-lucide="x" class="w-7 h-7"></i></button>
         </div>
         <div class="flex flex-col justify-center h-full gap-6 relative z-10">
-            <a href="#home"
-                class="mobile-link font-display text-3xl sm:text-4xl md:text-5xl font-bold text-burgundy/70 hover:text-burgundy tracking-wide transition-all hover:translate-x-3">HOME</a>
+            <a href="#about"
+                class="mobile-link flex items-center gap-3 font-display text-xl sm:text-2xl md:text-3xl font-bold text-textMuted hover:text-textMain tracking-wide transition-all hover:translate-x-3">
+                <i data-lucide="user" class="w-5 h-5 sm:w-6 sm:h-6"></i> ABOUT
+            </a>
             <a href="#skills"
-                class="mobile-link font-display text-3xl sm:text-4xl md:text-5xl font-bold text-burgundy/70 hover:text-burgundy tracking-wide transition-all hover:translate-x-3">SKILLS</a>
+                class="mobile-link flex items-center gap-3 font-display text-xl sm:text-2xl md:text-3xl font-bold text-textMuted hover:text-textMain tracking-wide transition-all hover:translate-x-3">
+                <i data-lucide="cpu" class="w-5 h-5 sm:w-6 sm:h-6"></i> SKILLS
+            </a>
             <a href="#journey"
-                class="mobile-link font-display text-3xl sm:text-4xl md:text-5xl font-bold text-burgundy/70 hover:text-burgundy tracking-wide transition-all hover:translate-x-3">JOURNEY</a>
+                class="mobile-link flex items-center gap-3 font-display text-xl sm:text-2xl md:text-3xl font-bold text-textMuted hover:text-textMain tracking-wide transition-all hover:translate-x-3">
+                <i data-lucide="map" class="w-5 h-5 sm:w-6 sm:h-6"></i> JOURNEY
+            </a>
             <a href="#work"
-                class="mobile-link font-display text-3xl sm:text-4xl md:text-5xl font-bold text-burgundy/70 hover:text-burgundy tracking-wide transition-all hover:translate-x-3">WORK</a>
+                class="mobile-link flex items-center gap-3 font-display text-xl sm:text-2xl md:text-3xl font-bold text-textMuted hover:text-textMain tracking-wide transition-all hover:translate-x-3">
+                <i data-lucide="folder-open" class="w-5 h-5 sm:w-6 sm:h-6"></i> WORK
+            </a>
             <a href="#contact"
-                class="mobile-link font-display text-3xl sm:text-4xl md:text-5xl font-bold text-burgundy/70 hover:text-burgundy tracking-wide transition-all hover:translate-x-3">CONTACT</a>
+                class="mobile-link flex items-center gap-3 font-display text-xl sm:text-2xl md:text-3xl font-bold text-textMuted hover:text-textMain tracking-wide transition-all hover:translate-x-3">
+                <i data-lucide="mail" class="w-5 h-5 sm:w-6 sm:h-6"></i> CONTACT
+            </a>
         </div>
-        <div class="flex justify-between items-end border-t border-burgundy/10 pt-6 relative z-10">
-            <div class="flex gap-6 text-burgundy-muted">
-                <a href="#" class="hover:text-burgundy transition-colors"><i data-lucide="github"></i></a>
-                <a href="#" class="hover:text-burgundy transition-colors"><i data-lucide="linkedin"></i></a>
-                <a href="#" class="hover:text-burgundy transition-colors"><i data-lucide="twitter"></i></a>
+        <div class="flex justify-between items-end border-t border-borderGray/30 pt-6 relative z-10">
+            <div class="flex gap-6 text-textMuted">
+                <a href="#" class="hover:text-textMain transition-colors"><i data-lucide="github"></i></a>
+                <a href="#" class="hover:text-textMain transition-colors"><i data-lucide="linkedin"></i></a>
+                <a href="#" class="hover:text-textMain transition-colors"><i data-lucide="twitter"></i></a>
             </div>
             <div class="text-right">
-                <p class="text-[10px] font-mono text-burgundy-muted tracking-widest">LOCAL TIME</p>
-                <p class="text-xs font-mono text-burgundy font-bold" id="mobile-live-time">00:00 IST</p>
+                <p class="text-[10px] font-mono text-textMuted tracking-widest">LOCAL TIME</p>
+                <p class="text-xs font-mono text-textMain font-bold" id="mobile-live-time">00:00</p>
             </div>
         </div>
     </div>
@@ -120,29 +319,34 @@
     <main>
 
         <!-- HERO SECTION -->
-        <section id="home" class="min-h-screen flex items-center justify-center px-6 pt-24 md:pt-0 relative">
+        <section id="home" class="min-h-screen flex items-center justify-center px-6 pt-24 relative">
             <div class="max-w-7xl w-full flex flex-col justify-center items-start">
-
-                <!-- Text Content -->
                 <div class="z-10 opacity-0 animate-fade-in-up max-w-4xl" style="animation-delay: 0.5s;">
-                    <p class="text-burgundy-light font-mono text-xs md:text-sm mb-4 tracking-[0.2em] font-bold">DATA
-                        SCIENTIST & CREATIVE</p>
+                    <p id="hero-subtitle"
+                        class="text-textAccent font-mono text-xs md:text-sm mb-4 tracking-[0.2em] font-bold h-5"></p>
 
                     <h1
                         class="font-display font-extrabold text-6xl md:text-8xl lg:text-9xl leading-[0.9] mb-8 tracking-tight">
-                        <span class="block text-burgundy drop-shadow-sm">AMAL</span>
-                        <span class="block text-charcoal drop-shadow-sm">SONU</span>
+                        <span class="block text-textMain drop-shadow-sm">AMAL</span>
+                        <span class="flex items-center flex-wrap gap-4 md:gap-6 mt-2 md:mt-4">
+                            <span class="block text-textAccent drop-shadow-sm leading-[0.8]">SONU</span>
+                            <span
+                                class="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-textAccent/30 bg-bgCard/30 text-[10px] md:text-xs lg:text-sm font-mono text-textAccent font-bold tracking-widest shadow-sm">
+                                <span
+                                    class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-textAccent animate-pulse shadow-[0_0_8px_#c5c4bf]"></span>
+                                OPEN FOR WORK
+                            </span>
+                        </span>
                     </h1>
 
-                    <!-- DESCRIPTION (UPDATED FROM CV) -->
-                    <div class="flex flex-col gap-6 mt-8 border-l-4 border-burgundy/30 pl-6 md:pl-8">
-                        <p class="text-burgundy text-lg md:text-xl leading-relaxed font-bold">
+                    <div class="flex flex-col gap-6 mt-8 border-l-4 border-borderGray/50 pl-6 md:pl-8">
+                        <p class="text-textMain text-lg md:text-xl leading-relaxed font-bold">
                             Passionate Programmer & BCA Student (AI & Data Science) at
-                            <span class="text-burgundy-light border-b-2 border-burgundy/20 pb-0.5">Chinmaya Vishwa
+                            <span class="text-textAccent border-b-2 border-borderGray/50 pb-0.5">Chinmaya Vishwa
                                 Vidhyapeeth</span>.
                         </p>
 
-                        <p class="text-burgundy-muted text-base md:text-lg leading-relaxed font-medium">
+                        <p class="text-textMuted text-base md:text-lg leading-relaxed font-medium">
                             With a disciplined approach to software structure and efficiency, I have built a strong core
                             in Python and Java (OOP), specializing in Deep Learning architectures to solve real-world
                             problems. My technical journey bridges the gap between intelligent backend models and
@@ -151,250 +355,178 @@
 
                         <div class="flex flex-wrap gap-4 mt-6">
                             <a href="#work"
-                                class="px-8 py-3.5 bg-burgundy text-gold-accent font-bold text-sm tracking-widest rounded-md hover:bg-burgundy-light transition-all transform hover:-translate-y-1 shadow-lg shadow-burgundy/20">
+                                class="px-8 py-3.5 bg-textMain text-bgMain font-bold text-sm tracking-widest rounded-md hover:bg-textAccent transition-all transform hover:-translate-y-1 shadow-lg shadow-textMain/10">
                                 VIEW PROJECTS
                             </a>
                             <a href="#contact"
-                                class="px-8 py-3.5 bg-white/50 border border-burgundy/20 text-burgundy font-bold text-sm tracking-widest rounded-md hover:bg-white hover:border-burgundy/50 transition-all transform hover:-translate-y-1 shadow-sm">
+                                class="px-8 py-3.5 bg-bgCard/30 border border-borderGray/50 text-textMain font-bold text-sm tracking-widest rounded-md hover:bg-bgCard hover:border-textAccent transition-all transform hover:-translate-y-1 shadow-sm">
                                 CONTACT
                             </a>
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- Scroll Indicator -->
             <div
                 class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden md:flex flex-col items-center gap-2 opacity-60">
-                <span class="text-[10px] font-mono tracking-widest text-burgundy-muted font-bold">SCROLL</span>
-                <i data-lucide="chevron-down" class="w-4 h-4 text-burgundy"></i>
+                <span class="text-[10px] font-mono tracking-widest text-textMuted font-bold">SCROLL</span>
+                <i data-lucide="chevron-down" class="w-4 h-4 text-textMain"></i>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="py-24 px-6 border-t border-borderGray/30 relative z-10">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-16 border-b border-borderGray/30 pb-6">
+                    <h2 class="font-display font-bold text-3xl md:text-5xl text-textMain">About Me</h2>
+                </div>
+
+                <div
+                    class="glass-panel p-8 md:p-12 rounded-3xl about-card relative overflow-hidden grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div
+                        class="absolute top-0 right-0 w-64 h-64 bg-textAccent rounded-full blur-[80px] -mr-20 -mt-20 opacity-[0.05] pointer-events-none">
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-display font-bold text-3xl text-textAccent mb-6">Bridging Logic and Creativity
+                        </h3>
+                        <p class="text-textMain leading-relaxed mb-6 font-medium">
+                            I am a developer who views code not just as a set of instructions, but as a medium for
+                            structured problem-solving. Bridging the gap between raw data and human-centric design, I
+                            build systems that are as robust on the backend as they are intuitive on the frontend.
+                        </p>
+                        <p class="text-textMuted leading-relaxed font-medium">
+                            My foundation in Computer Applications, specialized in AI and Data Science, allows me to
+                            approach web development with an analytical mindset. Whether it's training a neural network
+                            or structuring a complex interface, I believe in writing code that is clean, efficient, and
+                            built to scale.
+                        </p>
+                    </div>
+
+                    <div class="relative z-10 grid grid-cols-2 gap-4 sm:gap-6">
+                        <div
+                            class="bg-bgCard/20 border border-borderGray/30 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:border-textAccent/50 transition-colors">
+                            <i data-lucide="brain" class="w-8 h-8 text-textAccent mb-4"></i>
+                            <h4 class="font-bold text-textMain">AI Focus</h4>
+                            <p class="text-xs text-textMuted mt-2">Deep Learning & NLP</p>
+                        </div>
+                        <div
+                            class="bg-bgCard/20 border border-borderGray/30 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:border-textAccent/50 transition-colors">
+                            <i data-lucide="code" class="w-8 h-8 text-textAccent mb-4"></i>
+                            <h4 class="font-bold text-textMain">Clean Code</h4>
+                            <p class="text-xs text-textMuted mt-2">Scalable Architecture</p>
+                        </div>
+                        <div
+                            class="bg-bgCard/20 border border-borderGray/30 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:border-textAccent/50 transition-colors">
+                            <i data-lucide="database" class="w-8 h-8 text-textAccent mb-4"></i>
+                            <h4 class="font-bold text-textMain">Data Driven</h4>
+                            <p class="text-xs text-textMuted mt-2">Insights & Analytics</p>
+                        </div>
+                        <div
+                            class="bg-bgCard/20 border border-borderGray/30 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:border-textAccent/50 transition-colors">
+                            <i data-lucide="layout" class="w-8 h-8 text-textAccent mb-4"></i>
+                            <h4 class="font-bold text-textMain">Responsive</h4>
+                            <p class="text-xs text-textMuted mt-2">Modern Web Apps</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- SKILLS SECTION -->
-        <section id="skills" class="py-24 px-6 relative z-10">
+        <section id="skills" class="py-24 px-6 border-t border-borderGray/30 relative z-10">
             <div class="max-w-7xl mx-auto">
                 <div
-                    class="mb-16 border-b border-burgundy/10 pb-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
+                    class="mb-16 border-b border-borderGray/30 pb-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
                     <div>
-                        <h2 class="font-display font-bold text-3xl md:text-5xl text-burgundy">Proficiency</h2>
-                        <p class="text-burgundy-muted mt-3 text-sm md:text-base max-w-sm font-medium">A curated arsenal
-                            of tools and skills I use to build intelligent digital products.</p>
+                        <h2 class="font-display font-bold text-3xl md:text-5xl text-textMain">Proficiency</h2>
+                        <p class="text-textMuted mt-3 text-sm md:text-base max-w-sm font-medium">A curated arsenal of
+                            tools and skills I use to build intelligent digital products.</p>
                     </div>
                     <span
-                        class="text-burgundy font-mono text-xs border border-burgundy/20 bg-white/50 px-3 py-1.5 rounded-md font-bold">STACK_2025</span>
+                        class="text-textMain font-mono text-xs border border-borderGray/50 bg-bgCard/30 px-3 py-1.5 rounded-md font-bold">STACK_2025</span>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                    <!-- Core & Web Card -->
-                    <div class="glass-panel p-8 rounded-2xl skill-card relative overflow-hidden">
-                        <div
-                            class="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl -mr-10 -mt-10 opacity-50 pointer-events-none">
-                        </div>
-                        <div class="flex items-center gap-3 mb-8 text-burgundy relative z-10">
-                            <div class="p-3 bg-white rounded-xl shadow-sm border border-burgundy/5">
-                                <i data-lucide="code-2" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="font-display font-bold text-2xl">Core & Web</h3>
-                        </div>
-                        <div class="flex flex-wrap content-start relative z-10">
-                            <span class="skill-tag">HTML5</span>
-                            <span class="skill-tag">CSS3</span>
-                            <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">Java (OOP)</span>
-                            <span class="skill-tag">C Program</span>
-                        </div>
-                    </div>
-
-                    <!-- AI/ML Card -->
-                    <div class="glass-panel p-8 rounded-2xl skill-card relative overflow-hidden">
-                        <div
-                            class="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl -mr-10 -mt-10 opacity-50 pointer-events-none">
-                        </div>
-                        <div class="flex items-center gap-3 mb-8 text-burgundy relative z-10">
-                            <div class="p-3 bg-white rounded-xl shadow-sm border border-burgundy/5">
-                                <i data-lucide="brain-circuit" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="font-display font-bold text-2xl">Data Science</h3>
-                        </div>
-                        <div class="flex flex-wrap content-start relative z-10">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">NumPy</span>
-                            <span class="skill-tag">OpenCV</span>
-                            <span class="skill-tag">SQL</span>
-                        </div>
-                    </div>
-
-                    <!-- Soft Skills & Tools Card -->
-                    <div class="glass-panel p-8 rounded-2xl skill-card relative overflow-hidden">
-                        <div
-                            class="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl -mr-10 -mt-10 opacity-50 pointer-events-none">
-                        </div>
-                        <div class="flex items-center gap-3 mb-8 text-burgundy relative z-10">
-                            <div class="p-3 bg-white rounded-xl shadow-sm border border-burgundy/5">
-                                <i data-lucide="users" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="font-display font-bold text-2xl">Soft Skills & Tools</h3>
-                        </div>
-                        <div class="flex flex-wrap content-start relative z-10">
-                            <span class="skill-tag">Leadership</span>
-                            <span class="skill-tag">Management</span>
-                            <span class="skill-tag">Time Management</span>
-                            <span class="skill-tag">Git & GitHub</span>
-                        </div>
-                    </div>
-
+                <!-- Dynamic Skills Container -->
+                <div id="skills-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Cards will be injected here via JavaScript -->
                 </div>
             </div>
         </section>
 
         <!-- EXPERIENCE & EDUCATION SECTION -->
-        <section id="journey" class="py-24 px-6 border-t border-burgundy/10 relative z-10">
+        <section id="journey" class="py-24 px-6 border-t border-borderGray/30 relative z-10">
             <div class="max-w-7xl mx-auto">
                 <div
-                    class="mb-16 border-b border-burgundy/10 pb-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
+                    class="mb-16 border-b border-borderGray/30 pb-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
                     <div>
-                        <h2 class="font-display font-bold text-3xl md:text-5xl text-burgundy">Journey</h2>
-                        <p class="text-burgundy-muted mt-3 text-sm md:text-base max-w-sm font-medium">My academic
-                            background and professional experience.</p>
+                        <h2 class="font-display font-bold text-3xl md:text-5xl text-textMain">Journey</h2>
+                        <p class="text-textMuted mt-3 text-sm md:text-base max-w-sm font-medium">My academic background
+                            and professional experience.</p>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-                    <!-- Education -->
-                    <div class="glass-panel p-8 md:p-10 rounded-3xl relative overflow-hidden group">
-                        <div
-                            class="absolute top-0 right-0 w-40 h-40 bg-white rounded-full blur-3xl -mr-10 -mt-10 opacity-50 pointer-events-none group-hover:scale-150 transition-transform duration-700">
-                        </div>
-                        <div class="relative z-10">
-                            <div class="flex items-center gap-3 mb-6">
-                                <span
-                                    class="px-3 py-1 border border-burgundy/20 text-burgundy text-[10px] tracking-widest font-bold bg-white/50 rounded-full shadow-sm">EDUCATION</span>
-                            </div>
-                            <h3 class="font-display font-bold text-2xl md:text-3xl text-burgundy mb-2">Bachelor of
-                                Computer Application (AI & DS)</h3>
-                            <p class="text-burgundy-light font-bold text-lg mb-1">Chinmaya Vishwa Vidhyapeeth</p>
-                            <p class="text-burgundy-muted font-mono text-xs mb-6 tracking-wider">ONAKKOOR, ERNAKULAM |
-                                2024 - 2028</p>
-                            <p class="text-burgundy/80 text-sm md:text-base font-medium leading-relaxed">
-                                Developing a hybrid expertise in Deep Learning architectures and robust software
-                                engineering.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Experience -->
-                    <div class="glass-panel p-8 md:p-10 rounded-3xl relative overflow-hidden group">
-                        <div
-                            class="absolute top-0 right-0 w-40 h-40 bg-white rounded-full blur-3xl -mr-10 -mt-10 opacity-50 pointer-events-none group-hover:scale-150 transition-transform duration-700">
-                        </div>
-                        <div class="relative z-10">
-                            <div class="flex items-center gap-3 mb-6">
-                                <span
-                                    class="px-3 py-1 border border-burgundy/20 text-burgundy text-[10px] tracking-widest font-bold bg-white/50 rounded-full shadow-sm">EXPERIENCE</span>
-                            </div>
-                            <h3 class="font-display font-bold text-2xl md:text-3xl text-burgundy mb-2">Assistant Staff
-                            </h3>
-                            <p class="text-burgundy-light font-bold text-lg mb-1">Janshree Kendram</p>
-                            <p class="text-burgundy-muted font-mono text-xs mb-6 tracking-wider">ERNAKULAM, KERALA</p>
-                            <p class="text-burgundy/80 text-sm md:text-base font-medium leading-relaxed">
-                                Enhanced community service delivery by managing government portals and streamlining
-                                customer interactions to improve operational efficiency.
-                            </p>
-                        </div>
-                    </div>
-
+                <!-- Dynamic Journey Container -->
+                <div id="journey-container" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Cards will be injected here via JavaScript -->
                 </div>
             </div>
         </section>
 
         <!-- WORK SECTION -->
-        <section id="work" class="py-24 px-6 border-t border-burgundy/10 relative z-10">
+        <section id="work" class="py-24 px-6 border-t border-borderGray/30 relative z-10">
             <div class="max-w-7xl mx-auto">
-                <h2 class="font-display font-bold text-4xl md:text-6xl text-burgundy mb-16">Selected Works</h2>
+                <h2 class="font-display font-bold text-4xl md:text-6xl text-textMain mb-16">Selected Works</h2>
 
-                <div class="space-y-16">
-                    <!-- Project 1 (Updated to ARCADIA) -->
-                    <div class="glass-panel p-8 md:p-12 rounded-3xl project-card group relative overflow-hidden">
-                        <div
-                            class="absolute top-0 right-0 p-40 bg-white/40 rounded-full blur-3xl -mr-20 -mt-20 transition-all duration-500 group-hover:bg-white/60 pointer-events-none">
-                        </div>
-
-                        <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
-                            <!-- Number Column (Left Side) -->
-                            <div
-                                class="md:col-span-4 flex items-center justify-start md:pr-12 border-b md:border-b-0 md:border-r border-burgundy/10 pb-8 md:pb-0">
-                                <span
-                                    class="font-display font-bold text-[7rem] md:text-[9rem] leading-none text-burgundy/10 select-none group-hover:text-burgundy/20 transition-colors drop-shadow-sm">01</span>
-                            </div>
-
-                            <!-- Content Column (Right Side) -->
-                            <div class="md:col-span-8 flex flex-col justify-center py-4">
-                                <div class="flex items-center gap-3 mb-5">
-                                    <span
-                                        class="px-3 py-1 border border-burgundy/20 text-burgundy text-[10px] tracking-widest font-bold bg-white/50 rounded-full shadow-sm">FEATURED</span>
-                                </div>
-                                <h3
-                                    class="font-display font-bold text-3xl md:text-5xl text-burgundy mb-3 group-hover:text-burgundy-light transition-colors">
-                                    ARCADIA</h3>
-                                <p class="text-burgundy-muted font-mono text-xs mb-6 tracking-wider font-bold">ANCIENT
-                                    RECOGNITION AND CLASSIFICATION FOR ART DISCOVERY USING INTELLIGENT AI</p>
-                                <p
-                                    class="text-burgundy/80 leading-relaxed text-sm md:text-base mb-8 font-medium max-w-2xl">
-                                    A deep learning system preserving heritage by classifying traditional art forms
-                                    using custom CNN architectures. Achieved 95% accuracy on custom datasets.
-                                </p>
-                                <div>
-                                    <a href="https://scanart-artrecognisation.lovable.app/" target="_blank"
-                                        class="inline-flex items-center gap-2 text-burgundy border-b-2 border-burgundy/20 hover:border-burgundy pb-1 transition-all font-bold">
-                                        View Deployment <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Additional projects can be added here following the same structure as above -->
-
+                <!-- Dynamic Projects Container -->
+                <div id="projects-container" class="space-y-16">
+                    <!-- Cards will be injected here via JavaScript -->
                 </div>
             </div>
         </section>
 
         <!-- FOOTER -->
-        <footer id="contact" class="py-20 px-6 border-t border-burgundy/10 relative overflow-hidden z-10">
+        <footer id="contact" class="py-24 px-6 border-t border-borderGray/30 relative overflow-hidden z-10">
             <div
-                class="absolute inset-0 bg-white/20 opacity-0 hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                class="absolute inset-0 bg-textMain/5 opacity-0 hover:opacity-100 transition-opacity duration-700 pointer-events-none">
             </div>
 
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12 relative z-10">
-                <div>
-                    <h2 class="font-display font-bold text-5xl md:text-7xl text-burgundy mb-6">Let's Connect</h2>
-                    <a href="mailto:amalsonuoff@gmail.com"
-                        class="text-xl md:text-3xl text-burgundy-light font-medium hover:text-burgundy transition-colors border-b-2 border-burgundy/20 hover:border-burgundy pb-2 mb-6 inline-block">amalsonuoff@gmail.com</a>
-                    <div class="flex flex-col gap-2 text-burgundy-muted font-medium mt-4">
-                        <p class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> +91 8921746693
-                        </p>
-                        <p class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Ernakulam,
-                            Kerala, India</p>
-                    </div>
+            <div class="max-w-4xl mx-auto flex flex-col items-center text-center relative z-10">
+                <!-- Contact Info -->
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-borderGray/50 bg-bgCard/30 text-xs font-mono text-textAccent mb-8 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-textAccent animate-pulse"></span>
+                    Available for new opportunities
                 </div>
-                <div class="flex gap-6">
-                    <a href="https://github.com/amalsonu"
-                        class="p-4 bg-white/60 rounded-2xl shadow-sm text-burgundy hover:text-gold hover:bg-burgundy transition-all border border-burgundy/10 hover:-translate-y-1"><i
-                            data-lucide="github" class="w-6 h-6"></i></a>
-                    <a href="https://www.linkedin.com/in/amal-sonu-09298a320/"
-                        class="p-4 bg-white/60 rounded-2xl shadow-sm text-burgundy hover:text-gold hover:bg-burgundy transition-all border border-burgundy/10 hover:-translate-y-1"><i
-                            data-lucide="linkedin" class="w-6 h-6"></i></a>
+
+                <h2 class="font-display font-bold text-5xl md:text-7xl text-textMain mb-6">Let's Connect</h2>
+                <p class="text-textMain text-lg mb-10 max-w-xl font-medium leading-relaxed">Whether you have a question,
+                    a project in mind, or just want to say hi, I'll try my best to get back to you!</p>
+
+                <a href="mailto:amalsonuoff@gmail.com"
+                    class="text-2xl md:text-4xl text-textAccent font-medium hover:text-textMain transition-colors border-b-2 border-borderGray/50 hover:border-textMain pb-2 mb-12 inline-block">amalsonuoff@gmail.com</a>
+
+                <div class="flex flex-col md:flex-row gap-6 md:gap-12 text-textMuted font-medium mb-12">
+                    <p class="flex items-center gap-3"><i data-lucide="phone" class="w-5 h-5 text-textAccent"></i> +91
+                        8921746693</p>
+                    <p class="flex items-center gap-3"><i data-lucide="map-pin" class="w-5 h-5 text-textAccent"></i>
+                        Ernakulam, Kerala, India</p>
+                </div>
+
+                <div class="flex gap-4">
+                    <a href="https://github.com/amalsonu" target="_blank"
+                        class="magnetic-btn flex items-center justify-center w-14 h-14 bg-bgCard/40 rounded-2xl shadow-sm text-textMain hover:text-bgMain hover:bg-textMain transition-all border border-borderGray/30"><i
+                            class="devicon-github-original text-2xl pointer-events-none"></i></a>
+                    <a href="https://www.linkedin.com/in/amal-sonu-09298a320/" target="_blank"
+                        class="magnetic-btn flex items-center justify-center w-14 h-14 bg-bgCard/40 rounded-2xl shadow-sm text-textMain hover:text-bgMain hover:bg-textMain transition-all border border-borderGray/30"><i
+                            class="devicon-linkedin-plain text-2xl pointer-events-none"></i></a>
                 </div>
             </div>
+
             <div
-                class="max-w-7xl mx-auto mt-16 pt-8 border-t border-burgundy/10 flex flex-col md:flex-row justify-between items-center text-burgundy-muted text-xs font-mono font-bold">
-                <p>© 2025 AMAL SONU. ALL RIGHTS RESERVED.</p>
+                class="max-w-7xl mx-auto mt-24 pt-8 border-t border-borderGray/30 flex flex-col md:flex-row justify-between items-center text-textMuted text-xs font-mono font-bold">
+                <p>© 2026 AMAL SONU. ALL RIGHTS RESERVED.</p>
                 <p class="mt-4 md:mt-0">MADE WITH <i data-lucide="heart"
-                        class="inline w-3 h-3 text-burgundy fill-current"></i> & CODE</p>
+                        class="inline w-3 h-3 text-textAccent fill-current"></i> & CODE</p>
             </div>
         </footer>
 
