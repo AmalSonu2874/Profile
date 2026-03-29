@@ -58,7 +58,7 @@ const portfolioData = {
             title: "ARCADIA",
             subtitle: "ANCIENT RECOGNITION AND CLASSIFICATION FOR ART DISCOVERY USING INTELLIGENT AI",
             description: "A deep learning system preserving heritage by classifying traditional art forms using custom CNN architectures. Achieved 95% accuracy on custom datasets.",
-            link: "https://scanart-artrecognisation.lovable.app/",
+            link: "https://amalsonu2874.github.io/Arcadia/research.html",
             linkText: "View Deployment",
             featured: true
         }
