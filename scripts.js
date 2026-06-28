@@ -50,6 +50,13 @@ const portfolioData = {
             institution: "Janshree Kendram",
             location: "ERNAKULAM, KERALA",
             description: "Enhanced community service delivery by managing government portals and streamlining customer interactions to improve operational efficiency."
+        },
+        {
+            type: "EXPERIENCE",
+            title: "Data Science Intern",
+            institution: "SinroRobotics Private Limited",
+            location: "VYTTILA, ERNAKULAM ",
+            description: "Contributed to a team developing machine learning models for predictive analytics, gaining hands-on experience with Python and scikit-learn."
         }
     ],
     projects: [
@@ -353,3 +360,36 @@ window.onload = () => {
         });
     }, 100);
 };
+
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                // Grayscale Palette with pure black background
+                bgMain: '#000000',     // Pure Black
+                bgCard: '#1c1b1a',     // Darkest Gray
+                borderGray: '#3a3937', // Dark Gray
+                textMuted: '#8a8987',  // Medium Gray
+                textAccent: '#c5c4bf', // Light Gray
+                textMain: '#f8f7f3'    // Off-white
+            },
+            fontFamily: {
+                display: ['Syne', 'sans-serif'],
+                body: ['Manrope', 'sans-serif'],
+            },
+            animation: {
+                'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                'spin-slow': 'spin 15s linear infinite',
+            },
+            keyframes: {
+                fadeInUp: {
+                    '0%': { opacity: '0', transform: 'translateY(20px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                }
+            },
+            backgroundImage: {
+                'noise': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.08%22/%3E%3C/svg%3E')"
+            }
+        }
+    }
+}
