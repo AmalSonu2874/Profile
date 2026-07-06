@@ -42,21 +42,24 @@ const portfolioData = {
             title: "Bachelor of Computer Application (AI & DS)",
             institution: "Chinmaya Vishwa Vidhyapeeth",
             location: "ONAKKOOR, ERNAKULAM | 2024 - 2028",
-            description: "Developing a hybrid expertise in Deep Learning architectures and robust software engineering."
-        },
+            description: "Developing a hybrid expertise in Deep Learning architectures and robust software engineering.",
+            linkedin: "https://www.linkedin.com/school/chinmaya-vishwa-vidyapeeth/" // Replace with your desired LinkedIn URL
+        }, 
         {
             type: "EXPERIENCE",
             title: "Assistant Staff",
             institution: "Janshree Kendram",
             location: "ERNAKULAM, KERALA",
-            description: "Enhanced community service delivery by managing government portals and streamlining customer interactions to improve operational efficiency."
+            description: "Enhanced community service delivery by managing government portals and streamlining customer interactions to improve operational efficiency.",
+            linkedin: "https://www.linkedin.com/posts/amal-sonu-09298a320_completed-an-ai-data-science-internship-share-7479789119074738176-W3Fr/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFFNd-4Ba7Irx7MjYs241SIlFSW07Q0j_E4"
         },
         {
             type: "EXPERIENCE",
             title: "Data Science Intern",
             institution: "SinroRobotics Private Limited",
             location: "VYTTILA, ERNAKULAM ",
-            description: "Contributed to a team developing machine learning models for predictive analytics, gaining hands-on experience with Python and scikit-learn."
+            description: "Contributed to a team developing machine learning models for predictive analytics, gaining hands-on experience with Python and scikit-learn.",
+            linkedin: "https://www.linkedin.com/posts/amal-sonu-09298a320_completed-my-1-month-data-entry-assistant-share-7353841899079704578-TR5d/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFFNd-4Ba7Irx7MjYs241SIlFSW07Q0j_E4"
         }
     ],
     projects: [
@@ -101,19 +104,37 @@ function renderContent() {
     // Render Journey
     const journeyContainer = document.getElementById('journey-container');
     journeyContainer.innerHTML = portfolioData.journey.map(item => `
-                <div class="glass-panel p-8 md:p-10 rounded-3xl relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-40 h-40 bg-textAccent rounded-full blur-[70px] -mr-10 -mt-10 opacity-10 pointer-events-none group-hover:scale-150 transition-transform duration-700"></div>
-                    <div class="relative z-10">
-                        <div class="flex items-center gap-3 mb-6">
-                            <span class="px-3 py-1 border border-borderGray/50 text-textAccent text-[10px] tracking-widest font-bold bg-bgCard/30 rounded-full shadow-sm">${item.type}</span>
-                        </div>
-                        <h3 class="font-display font-bold text-2xl md:text-3xl text-textMain mb-2">${item.title}</h3>
-                        <p class="text-textAccent font-bold text-lg mb-1">${item.institution}</p>
-                        <p class="text-textMuted font-mono text-xs mb-6 tracking-wider">${item.location}</p>
-                        <p class="text-textMain/70 text-sm md:text-base font-medium leading-relaxed">${item.description}</p>
-                    </div>
-                </div>
-            `).join('');
+    <div
+        class="glass-panel p-8 md:p-10 rounded-3xl relative overflow-hidden group ${item.linkedin ? 'cursor-pointer hover:scale-[1.02] transition-transform duration-300' : ''}"
+        ${item.linkedin ? `onclick="window.open('${item.linkedin}', '_blank')"` : ''}
+    >
+        <div class="absolute top-0 right-0 w-40 h-40 bg-textAccent rounded-full blur-[70px] -mr-10 -mt-10 opacity-10 pointer-events-none group-hover:scale-150 transition-transform duration-700"></div>
+
+        <div class="relative z-10">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="px-3 py-1 border border-borderGray/50 text-textAccent text-[10px] tracking-widest font-bold bg-bgCard/30 rounded-full shadow-sm">
+                    ${item.type}
+                </span>
+            </div>
+
+            <h3 class="font-display font-bold text-2xl md:text-3xl text-textMain mb-2">
+                ${item.title}
+            </h3>
+
+            <p class="text-textAccent font-bold text-lg mb-1">
+                ${item.institution}
+            </p>
+
+            <p class="text-textMuted font-mono text-xs mb-6 tracking-wider">
+                ${item.location}
+            </p>
+
+            <p class="text-textMain/70 text-sm md:text-base font-medium leading-relaxed">
+                ${item.description}
+            </p>
+        </div>
+    </div>
+`).join('');
 
     // Render Projects
     const projectsContainer = document.getElementById('projects-container');
